@@ -11,6 +11,7 @@
     <string name="prompt_prenom">Prénom</string>
     <string name="prompt_amount">Montant</string>
     <string name="action_reload">Recharger</string>
+    <string name="prompt_desc">Description</string>
     <string name="badge">Scanner un badge</string>
 
 </resources>
