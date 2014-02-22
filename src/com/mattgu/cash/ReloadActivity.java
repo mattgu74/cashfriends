@@ -1,15 +1,26 @@
 package com.mattgu.cash;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+import com.mattgu.cash.api.Api;
+import com.mattgu.cash.api.ApiClient;
+
+import com.mattgu.cash.models.Transaction;
+
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,6 +29,9 @@ public class ReloadActivity extends Activity {
 	private NfcAdapter mNfcAdapter;
 	private EditText mFieldMail;
 	private EditText mFieldBadge;
+	private EditText mFieldAmount;
+	private EditText mFieldNom;
+	private EditText mFieldPrenom;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +40,17 @@ public class ReloadActivity extends Activity {
 		
 		mFieldBadge = (EditText) findViewById(R.id.badge);
 		mFieldMail = (EditText) findViewById(R.id.email);
+		mFieldNom = (EditText) findViewById(R.id.nom);
+		mFieldPrenom = (EditText) findViewById(R.id.prenom);
+		mFieldAmount = (EditText) findViewById(R.id.amount);
+		
+		// On cache les champs inutilisés pour le moment
+		mFieldMail.setVisibility(View.GONE);
+		mFieldNom.setVisibility(View.GONE);
+		mFieldPrenom.setVisibility(View.GONE);
+		findViewById(R.id.labelEmail).setVisibility(View.GONE);
+		findViewById(R.id.labelNom).setVisibility(View.GONE);
+		findViewById(R.id.labelPrenom).setVisibility(View.GONE);
 		
 		mNfcAdapter = NfcAdapter.getDefaultAdapter(getApplicationContext());
 		if(mNfcAdapter == null) {
@@ -34,6 +59,45 @@ public class ReloadActivity extends Activity {
 		else if(!mNfcAdapter.isEnabled()) {
             Toast.makeText(this, "NFC est désactivé", Toast.LENGTH_LONG).show();
 		}
+		
+		final ProgressDialog progDialog1 = ProgressDialog.show(this,"Dépôt d'argent", "Dépot en cours...");
+		progDialog1.hide();
+		View.OnClickListener handler = new View.OnClickListener(){
+			public void onClick(View v) {
+				// Show loading popup
+		    	progDialog1.show();
+		    	
+		    	// Launch request
+		    	final Api service = ApiClient.getService();
+
+		    	int amount = 0;
+		    	try {
+		    		amount = Integer.parseInt(mFieldAmount.getText().toString());
+		    		if(amount > 0) {
+		    			amount *= -1;
+						service.postTransaction(mFieldBadge.getText().toString(), amount, new Callback<Transaction>() {
+							
+							@Override
+							public void success(Transaction transaction, Response arg1) {
+								progDialog1.dismiss();
+							}
+							
+							@Override
+							public void failure(RetrofitError arg0) {
+								progDialog1.dismiss();
+								Toast.makeText(ReloadActivity.this, "Erreur !", Toast.LENGTH_LONG).show();
+							}
+						});
+		    		} else {
+		    			Toast.makeText(ReloadActivity.this, "Montant négatif !", Toast.LENGTH_LONG).show();
+		    		}
+		    	} finally {
+		    		mFieldBadge.setText("");
+		    		mFieldAmount.setText("");
+		    	}
+			}
+		};
+		findViewById(R.id.reload_button).setOnClickListener(handler);
 	}
 	
 	final protected Boolean identifierIsAvailable() {

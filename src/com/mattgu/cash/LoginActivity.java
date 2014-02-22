@@ -1,20 +1,7 @@
 package com.mattgu.cash;
 
-import java.io.IOException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.CookieStore;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.protocol.ClientContext;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.protocol.BasicHttpContext;
-
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.ApacheClient;
-import retrofit.client.Client;
 import retrofit.client.Response;
 
 import com.mattgu.cash.api.Api;
@@ -31,7 +18,6 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -58,6 +44,7 @@ public class LoginActivity extends Activity {
 		mFieldBadge = (EditText) findViewById(R.id.badge);
 		mFieldMail = (EditText) findViewById(R.id.email);
 		mFieldPassword = (EditText) findViewById(R.id.password);
+		mFieldMail.setVisibility(View.GONE);
 		
 		TextView textLogin = (TextView) findViewById(R.id.loginText);
 		
@@ -122,25 +109,14 @@ public class LoginActivity extends Activity {
 			@Override
 			public void success(User user, Response arg1) {
 				Log.i("coucou", ""+user);
-				service.getTransactions(new Callback<UserTransactions>() {
-
-					@Override
-					public void failure(RetrofitError arg0) {
-						progDialog.dismiss();
-						Toast.makeText(LoginActivity.this, "Erreur !", Toast.LENGTH_LONG).show();
-					}
-
-					@Override
-					public void success(UserTransactions trans, Response arg1) {
-						LoginActivity.this.startActivity(nextIntent);
-					}
-				});
+				LoginActivity.this.startActivity(nextIntent);
 			}
 			
 			@Override
 			public void failure(RetrofitError arg0) {
 				progDialog.dismiss();
 				Toast.makeText(LoginActivity.this, "Erreur !", Toast.LENGTH_LONG).show();
+				LoginActivity.this.startActivity(nextIntent);
 			}
 		});
     	
