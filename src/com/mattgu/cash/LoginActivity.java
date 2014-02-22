@@ -34,7 +34,6 @@ public class LoginActivity extends Activity {
 	private EditText mFieldMail;
 	private EditText mFieldBadge;
 	private EditText mFieldPassword;
-	private String login;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +57,8 @@ public class LoginActivity extends Activity {
 		else if(!mNfcAdapter.isEnabled()) {
             Toast.makeText(this, "NFC est désactivé", Toast.LENGTH_LONG).show();
 		} else {
-			textLogin.setText("Vous pouvez soit scanner votre badge, soit tapper votre adresse email.");
-			textLogin.setVisibility(View.VISIBLE);
+			//textLogin.setText("Vous pouvez soit scanner votre badge, soit tapper votre adresse email.");
+			//textLogin.setVisibility(View.VISIBLE);
 			findViewById(R.id.badge).setVisibility(View.VISIBLE);
 		}
 		
@@ -95,16 +94,9 @@ public class LoginActivity extends Activity {
     	final ProgressDialog progDialog = ProgressDialog.show(this,"Authentification", "Vérification en cours...");
     	
     	// Launch request
-		
     	final Api service = ApiClient.getService();
 		
-    	login = "";
-		if(mFieldBadge.getText().toString() != "") {
-			login = mFieldBadge.getText().toString();
-		} else {
-			login = mFieldMail.getText().toString(); 
-		}
-		service.login(login, mFieldPassword.getText().toString(), new Callback<User>() {
+		service.login(mFieldBadge.getText().toString(), mFieldPassword.getText().toString(), new Callback<User>() {
 			
 			@Override
 			public void success(User user, Response arg1) {
@@ -116,7 +108,8 @@ public class LoginActivity extends Activity {
 			public void failure(RetrofitError arg0) {
 				progDialog.dismiss();
 				Toast.makeText(LoginActivity.this, "Erreur !", Toast.LENGTH_LONG).show();
-				LoginActivity.this.startActivity(nextIntent);
+				mFieldBadge.setText("");
+				mFieldPassword.setText("");
 			}
 		});
     	

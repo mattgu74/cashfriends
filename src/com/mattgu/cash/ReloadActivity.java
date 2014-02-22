@@ -45,10 +45,10 @@ public class ReloadActivity extends Activity {
 		mFieldAmount = (EditText) findViewById(R.id.amount);
 		
 		// On cache les champs inutilisés pour le moment
-		mFieldMail.setVisibility(View.GONE);
+		//mFieldMail.setVisibility(View.GONE);
 		mFieldNom.setVisibility(View.GONE);
 		mFieldPrenom.setVisibility(View.GONE);
-		findViewById(R.id.labelEmail).setVisibility(View.GONE);
+		//findViewById(R.id.labelEmail).setVisibility(View.GONE);
 		findViewById(R.id.labelNom).setVisibility(View.GONE);
 		findViewById(R.id.labelPrenom).setVisibility(View.GONE);
 		
