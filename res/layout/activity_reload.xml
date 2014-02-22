@@ -12,6 +12,13 @@
         <LinearLayout
             style="@style/LoginFormContainer"
             android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Badge :"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
             
             <EditText
                 android:id="@+id/badge"
@@ -22,6 +29,13 @@
                 android:maxLines="1"
                 android:singleLine="true" />
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nom :"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
 			<EditText
                 android:id="@+id/nom"
                 android:layout_width="match_parent"
@@ -30,6 +44,13 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true" />
+
+			<TextView
+			    android:id="@+id/textView4"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="Prénom :"
+			    android:textAppearance="?android:attr/textAppearanceMedium" />
                         
 			<EditText
                 android:id="@+id/prenom"
@@ -39,6 +60,13 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true" />
+
+			<TextView
+			    android:id="@+id/textView5"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="Email :"
+			    android:textAppearance="?android:attr/textAppearanceMedium" />
             
             <EditText
                 android:id="@+id/email"
@@ -49,9 +77,12 @@
                 android:maxLines="1"
                 android:singleLine="true" />
 
-         <LinearLayout
-             style="@style/LoginFormContainer"
-             android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Montant (€) :"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
              <EditText
                  android:id="@+id/amount"
@@ -65,13 +96,6 @@
                  android:maxLines="1"
                  android:singleLine="true" />
 
-             <TextView
-                 android:id="@+id/textView1"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="€"
-                 android:textAppearance="?android:attr/textAppearanceLarge" />
-         </LinearLayout>
 
             <Button
                 android:id="@+id/reload_button"
