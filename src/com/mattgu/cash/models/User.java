@@ -7,11 +7,12 @@ public class User {
 	public String email;
 	public String first_name;
 	public String last_name;
+	public Integer solde;
     
     public User() {}
     
 	public User(int id, String username, String badge_uid, String email,
-			String first_name, String last_name) {
+			String first_name, String last_name, Integer solde) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -19,12 +20,13 @@ public class User {
 		this.email = email;
 		this.first_name = first_name;
 		this.last_name = last_name;
+		this.solde = solde;
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", badge_uid="
 				+ badge_uid + ", email=" + email + ", first_name=" + first_name
-				+ ", last_name=" + last_name + "]";
+				+ ", last_name=" + last_name + ", solde=" + solde +"]";
 	}
 }

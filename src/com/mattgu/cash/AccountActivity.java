@@ -1,7 +1,17 @@
 package com.mattgu.cash;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+import com.mattgu.cash.api.Api;
+import com.mattgu.cash.api.ApiClient;
+import com.mattgu.cash.models.User;
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
@@ -27,6 +37,32 @@ public class AccountActivity extends Activity {
 		
 		tvNom.setVisibility(View.GONE);
 		tvPrenom.setVisibility(View.GONE);
+		
+		final Api service = ApiClient.getService();
+		service.user(new Callback<User>() {
+
+			@Override
+			public void failure(RetrofitError arg0) {
+				new AlertDialog.Builder(AccountActivity.this)
+			    .setTitle("Erreur")
+			    .setMessage("Une erreur à eu lieu."+arg0)
+			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int which) { 
+			            // continue with delete
+			        }
+			     })
+			     .show();
+			}
+
+			@Override
+			public void success(User user, Response arg1) {
+				tvEmail.setText("Email : "+user.email);
+				tvBadge.setText("Badge : "+user.badge_uid);
+				tvBadge.setText("Solde global : "+user.solde);
+			}
+			
+			
+		});
 		
 	}
 

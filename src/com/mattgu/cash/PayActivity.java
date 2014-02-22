@@ -111,7 +111,7 @@ public class PayActivity extends Activity {
 						progDialog1.dismiss();
 						new AlertDialog.Builder(PayActivity.this)
 					    .setTitle("Erreur")
-					    .setMessage("Une erreur à eu lieu, vous avez surement plus d'argent."+arg0)
+					    .setMessage("Une erreur à eu lieu, vous avez surement plus d'argent.")
 					    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					        public void onClick(DialogInterface dialog, int which) { 
 					            // continue with delete

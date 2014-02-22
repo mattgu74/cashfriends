@@ -27,4 +27,7 @@ public interface Api {
 	@POST("/api/user/transactions")
 	void postTransaction(@Field("dst_usr") String dst_usr, @Field("dst_email") String dst_email, @Field("message") String message, @Field("amount") int amount,
 			Callback<Transaction> callback);
+	
+	@GET("/user")
+	void user(Callback<User> callback);
 }
