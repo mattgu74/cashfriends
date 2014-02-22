@@ -2,12 +2,14 @@ package com.mattgu.cash;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -79,13 +81,20 @@ public class LoginActivity extends Activity {
 		
 	}
 	
-    protected void tryToLogin(Intent nextIntent) {
+    protected void tryToLogin(final Intent nextIntent) {
     	// Show loading popup
+    	Object progDialog = ProgressDialog.show(this,"Authentification", "Vérification en cours...");
     	
     	// Launch request
     	
     	// If success
-    	LoginActivity.this.startActivity(nextIntent);
+    	// SLEEP 2 SECONDS HERE ...
+        Handler handler = new Handler(); 
+        handler.postDelayed(new Runnable() { 
+             public void run() { 
+                  LoginActivity.this.startActivity(nextIntent);
+             } 
+        }, 2000); 
     	
     	// if not, empty form and show error
     	
