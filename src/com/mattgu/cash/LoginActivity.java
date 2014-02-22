@@ -22,18 +22,23 @@ public class LoginActivity extends Activity {
 	
 	private NfcAdapter mNfcAdapter;
 	private EditText mFieldMail;
+	private EditText mFieldBadge;
+	private EditText mFieldPassword;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
+		mFieldBadge = (EditText) findViewById(R.id.badge);
 		mFieldMail = (EditText) findViewById(R.id.email);
+		mFieldPassword = (EditText) findViewById(R.id.password);
 		
 		TextView textLogin = (TextView) findViewById(R.id.loginText);
 		
 		textLogin.setVisibility(View.GONE);
-		findViewById(R.id.scanLoading).setVisibility(View.GONE);
+		findViewById(R.id.badge).setVisibility(View.GONE);
 		
 		mNfcAdapter = NfcAdapter.getDefaultAdapter(getApplicationContext());
 		if(mNfcAdapter == null) {
@@ -42,16 +47,15 @@ public class LoginActivity extends Activity {
 		else if(!mNfcAdapter.isEnabled()) {
             Toast.makeText(this, "NFC est désactivé", Toast.LENGTH_LONG).show();
 		} else {
-			textLogin.setText("Vous pouvez scanner votre badge...");
+			textLogin.setText("Vous pouvez soit scanner votre badge, soit tapper votre adresse email.");
 			textLogin.setVisibility(View.VISIBLE);
-			findViewById(R.id.scanLoading).setVisibility(View.VISIBLE);
+			findViewById(R.id.badge).setVisibility(View.VISIBLE);
 		}
 		
 		Bundle b = getIntent().getExtras();
 		final int nextAction = b.getInt("action");
 		
 		View.OnClickListener handler = new View.OnClickListener(){
-			// TODO: Il faudra faire ça que si le login est successfull et en passant le user en parametre.
 			public void onClick(View v) {
 				Intent intentMain = null;
 				switch(nextAction) {
@@ -68,13 +72,24 @@ public class LoginActivity extends Activity {
 	                        AccountActivity.class);
 					break;
 				}
-				LoginActivity.this.startActivity(intentMain);
+				tryToLogin(intentMain);
 			}
 		};
 		findViewById(R.id.sign_in_button).setOnClickListener(handler);
 		
 	}
 	
+    protected void tryToLogin(Intent nextIntent) {
+    	// Show loading popup
+    	
+    	// Launch request
+    	
+    	// If success
+    	LoginActivity.this.startActivity(nextIntent);
+    	
+    	// if not, empty form and show error
+    	
+    }
 	
 	final protected Boolean identifierIsAvailable() {
 		return mNfcAdapter != null;
@@ -104,9 +119,7 @@ public class LoginActivity extends Activity {
         final String id = ByteArrayToHexString(tag.getId());
         Log.d("NFCREAD", "Tag: " + id);
 
-        // TODO: Regarder si le tag est en cache, si non envoyer une requete au serveur.
-        //       Puis completer l'adresse mail en conséquence.
-        mFieldMail.setText(id);
+        mFieldBadge.setText(id);
     }
     
     @Override
