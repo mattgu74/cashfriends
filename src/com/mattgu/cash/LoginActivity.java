@@ -1,5 +1,27 @@
 package com.mattgu.cash;
 
+import java.io.IOException;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.protocol.BasicHttpContext;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.ApacheClient;
+import retrofit.client.Client;
+import retrofit.client.Response;
+
+import com.mattgu.cash.api.Api;
+import com.mattgu.cash.api.ApiClient;
+import com.mattgu.cash.models.User;
+import com.mattgu.cash.models.UserTransactions;
+
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
@@ -26,6 +48,7 @@ public class LoginActivity extends Activity {
 	private EditText mFieldMail;
 	private EditText mFieldBadge;
 	private EditText mFieldPassword;
+	private String login;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,20 +105,44 @@ public class LoginActivity extends Activity {
 	
     protected void tryToLogin(final Intent nextIntent) {
     	// Show loading popup
-    	Object progDialog = ProgressDialog.show(this,"Authentification", "Vérification en cours...");
+    	final ProgressDialog progDialog = ProgressDialog.show(this,"Authentification", "Vérification en cours...");
     	
     	// Launch request
-    	
-    	// If success
-    	// SLEEP 2 SECONDS HERE ...
-        Handler handler = new Handler(); 
-        handler.postDelayed(new Runnable() { 
-             public void run() { 
-                  LoginActivity.this.startActivity(nextIntent);
-             } 
-        }, 2000); 
-    	
-    	// if not, empty form and show error
+		
+    	final Api service = ApiClient.getService();
+		
+    	login = "";
+		if(mFieldBadge.getText().toString() != "") {
+			login = mFieldBadge.getText().toString();
+		} else {
+			login = mFieldMail.getText().toString(); 
+		}
+		service.login(login, mFieldPassword.getText().toString(), new Callback<User>() {
+			
+			@Override
+			public void success(User user, Response arg1) {
+				Log.i("coucou", ""+user);
+				service.getTransactions(new Callback<UserTransactions>() {
+
+					@Override
+					public void failure(RetrofitError arg0) {
+						progDialog.dismiss();
+						Toast.makeText(LoginActivity.this, "Erreur !", Toast.LENGTH_LONG).show();
+					}
+
+					@Override
+					public void success(UserTransactions trans, Response arg1) {
+						LoginActivity.this.startActivity(nextIntent);
+					}
+				});
+			}
+			
+			@Override
+			public void failure(RetrofitError arg0) {
+				progDialog.dismiss();
+				Toast.makeText(LoginActivity.this, "Erreur !", Toast.LENGTH_LONG).show();
+			}
+		});
     	
     }
 	
