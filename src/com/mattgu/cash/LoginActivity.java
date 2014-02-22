@@ -27,7 +27,6 @@ public class LoginActivity extends Activity {
 	private EditText mFieldBadge;
 	private EditText mFieldPassword;
 	
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
