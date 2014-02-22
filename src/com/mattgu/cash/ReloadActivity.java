@@ -75,7 +75,7 @@ public class ReloadActivity extends Activity {
 		    		amount = Integer.parseInt(mFieldAmount.getText().toString());
 		    		if(amount > 0) {
 		    			amount *= -1;
-						service.postTransaction(mFieldBadge.getText().toString(), amount, new Callback<Transaction>() {
+						service.postTransaction(mFieldBadge.getText().toString(), mFieldMail.getText().toString(), "Dépôt de cash", amount, new Callback<Transaction>() {
 							
 							@Override
 							public void success(Transaction transaction, Response arg1) {
@@ -93,6 +93,7 @@ public class ReloadActivity extends Activity {
 		    		}
 		    	} finally {
 		    		mFieldBadge.setText("");
+		    		mFieldMail.setText("");
 		    		mFieldAmount.setText("");
 		    	}
 			}

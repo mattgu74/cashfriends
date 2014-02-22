@@ -25,6 +25,6 @@ public interface Api {
 
 	@FormUrlEncoded
 	@POST("/api/user/transactions")
-	void postTransaction(@Field("dst_usr") String dst_usr, @Field("amount") int amount,
+	void postTransaction(@Field("dst_usr") String dst_usr, @Field("dst_email") String dst_email, @Field("message") String message, @Field("amount") int amount,
 			Callback<Transaction> callback);
 }

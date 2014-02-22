@@ -2,13 +2,13 @@ package com.mattgu.cash.models;
 
 public class Transaction {
 	public String id;
-	public String src;
-	public String dst;
+	public User src;
+	public User dst;
 	public int amount;
 	
 	public Transaction() {}
 
-	public Transaction(String id, String src, String dst, int amount) {
+	public Transaction(String id, User src, User dst, int amount) {
 		super();
 		this.id = id;
 		this.src = src;
