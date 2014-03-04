@@ -23,6 +23,8 @@ public class AccountActivity extends Activity {
 	private TextView tvEmail;
 	private TextView tvBadge;
 	private TextView tvSolde;
+	private TextView tvSoldeIn;
+	private TextView tvSoldeOut;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class AccountActivity extends Activity {
 		tvEmail = (TextView) findViewById(R.id.email);
 		tvBadge = (TextView) findViewById(R.id.badge);
 		tvSolde = (TextView) findViewById(R.id.solde);
+		tvSoldeIn = (TextView) findViewById(R.id.soldeIn);
+		tvSoldeOut = (TextView) findViewById(R.id.soldeOut);
 		
 		tvNom.setVisibility(View.GONE);
 		tvPrenom.setVisibility(View.GONE);
@@ -45,7 +49,7 @@ public class AccountActivity extends Activity {
 			public void failure(RetrofitError arg0) {
 				new AlertDialog.Builder(AccountActivity.this)
 			    .setTitle("Erreur")
-			    .setMessage("Une erreur à eu lieu."+arg0)
+			    .setMessage("Une erreur à eu lieu. "+arg0)
 			    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			        public void onClick(DialogInterface dialog, int which) { 
 			            // continue with delete
@@ -58,7 +62,9 @@ public class AccountActivity extends Activity {
 			public void success(User user, Response arg1) {
 				tvEmail.setText("Email : "+user.email);
 				tvBadge.setText("Badge : "+user.badge_uid);
-				tvBadge.setText("Solde global : "+user.solde);
+				tvSolde.setText("Solde global : "+user.solde+" €");
+				tvSoldeIn.setText("Solde 'rentrant' : "+user.in+" €");
+				tvSoldeOut.setText("Solde 'sortant' : -"+user.out+" €");
 			}
 			
 			

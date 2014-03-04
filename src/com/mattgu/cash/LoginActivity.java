@@ -62,12 +62,12 @@ public class LoginActivity extends Activity {
 			findViewById(R.id.badge).setVisibility(View.VISIBLE);
 		}
 		
-		Bundle b = getIntent().getExtras();
-		final int nextAction = b.getInt("action");
+		//Bundle b = getIntent().getExtras();
+		//final int nextAction = b.getInt("action");
 		
 		View.OnClickListener handler = new View.OnClickListener(){
 			public void onClick(View v) {
-				Intent intentMain = null;
+				/*Intent intentMain = null;
 				switch(nextAction) {
 				case 1:
 					intentMain = new Intent(LoginActivity.this , 
@@ -81,7 +81,9 @@ public class LoginActivity extends Activity {
 					intentMain = new Intent(LoginActivity.this , 
 	                        AccountActivity.class);
 					break;
-				}
+				}*/
+				Intent intentMain = new Intent(LoginActivity.this , 
+                        MainActivity.class);
 				tryToLogin(intentMain);
 			}
 		};

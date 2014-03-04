@@ -14,8 +14,10 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
@@ -74,22 +76,46 @@ public class ReloadActivity extends Activity {
 		    	try {
 		    		amount = Integer.parseInt(mFieldAmount.getText().toString());
 		    		if(amount > 0) {
-		    			amount *= -1;
 						service.postTransaction(mFieldBadge.getText().toString(), mFieldMail.getText().toString(), "Dépôt de cash", amount, new Callback<Transaction>() {
 							
 							@Override
 							public void success(Transaction transaction, Response arg1) {
 								progDialog1.dismiss();
+								new AlertDialog.Builder(ReloadActivity.this)
+							    .setTitle("Rechargement réussi")
+							    .setMessage("Le serveur a bien enregistrer les données.")
+							    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							        public void onClick(DialogInterface dialog, int which) { 
+							            // continue with delete
+							        }
+							     })
+							     .show();
 							}
 							
 							@Override
 							public void failure(RetrofitError arg0) {
 								progDialog1.dismiss();
-								Toast.makeText(ReloadActivity.this, "Erreur !", Toast.LENGTH_LONG).show();
+								new AlertDialog.Builder(ReloadActivity.this)
+							    .setTitle("Erreur")
+							    .setMessage("Une erreur à eu lieu, le serveur n'a pas enregistré les données.")
+							    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							        public void onClick(DialogInterface dialog, int which) { 
+							            // continue with delete
+							        }
+							     })
+							     .show();
 							}
 						});
 		    		} else {
-		    			Toast.makeText(ReloadActivity.this, "Montant négatif !", Toast.LENGTH_LONG).show();
+		    			new AlertDialog.Builder(ReloadActivity.this)
+					    .setTitle("Erreur")
+					    .setMessage("Vous ne pouvez pas recharger un montant négatif.")
+					    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					        public void onClick(DialogInterface dialog, int which) { 
+					            // continue with delete
+					        }
+					     })
+					     .show();
 		    		}
 		    	} finally {
 		    		mFieldBadge.setText("");

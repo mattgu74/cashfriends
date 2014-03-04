@@ -41,16 +41,22 @@ public class MainActivity extends Activity {
 		View.OnClickListener handler = new View.OnClickListener(){
 		
 			public void onClick(View v) {
-				Intent intentMain = new Intent(MainActivity.this , 
-                        LoginActivity.class);
+				//Intent intentMain = new Intent(MainActivity.this , 
+                //        LoginActivity.class);
 				if(v==btnReload) {
-					intentMain.putExtra("action", 1);
+					//intentMain.putExtra("action", 1);
+					MainActivity.this.startActivity(new Intent(MainActivity.this , 
+			                        ReloadActivity.class));
 				} else if(v==btnPay) {
-					intentMain.putExtra("action", 2);
+					//intentMain.putExtra("action", 2);
+					MainActivity.this.startActivity(new Intent(MainActivity.this , 
+	                        PayActivity.class));
 				} else {
-					intentMain.putExtra("action", 3);
+					//intentMain.putExtra("action", 3);
+					MainActivity.this.startActivity(new Intent(MainActivity.this , 
+	                        AccountActivity.class));
 				}
-				MainActivity.this.startActivity(intentMain);
+				//MainActivity.this.startActivity(intentMain);
 			}
 		};
 		

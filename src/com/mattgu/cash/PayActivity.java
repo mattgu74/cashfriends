@@ -89,6 +89,7 @@ public class PayActivity extends Activity {
     	try {
     		amount = Integer.parseInt(mFieldAmount.getText().toString());
     		if(amount > 0) {
+    			amount *= -1;
 				service.postTransaction(id, "", mFieldDesc.getText().toString(), amount, new Callback<Transaction>() {
 					
 

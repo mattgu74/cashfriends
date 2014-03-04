@@ -35,7 +35,7 @@ public class ApiClient
 		};
 		
 		RestAdapter restAdapter = new RestAdapter.Builder()
-		    .setEndpoint("http://83.200.124.18:5000") //http://cash.mattgu.com")
+		    .setEndpoint("http://cash.mattgu.com") //83.200.124.18:5000") //http://cash.mattgu.com")
 		    .setClient(client)
 		    .build();
 		service = restAdapter.create(Api.class);

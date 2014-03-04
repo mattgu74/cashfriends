@@ -52,5 +52,21 @@
 	    android:layout_below="@+id/badge"
 	    android:text="Solde global :"
 	    android:textAppearance="?android:attr/textAppearanceMedium" />
+	<TextView
+	    android:id="@+id/soldeIn"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/solde"
+	    android:text="Argent 'rechargé' :"
+	    android:textAppearance="?android:attr/textAppearanceMedium" />
+	<TextView
+	    android:id="@+id/soldeOut"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/soldeIn"
+	    android:text="Argent 'Dépensé' :"
+	    android:textAppearance="?android:attr/textAppearanceMedium" />
     
 </RelativeLayout>

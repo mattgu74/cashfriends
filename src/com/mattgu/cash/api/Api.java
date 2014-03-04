@@ -28,6 +28,6 @@ public interface Api {
 	void postTransaction(@Field("dst_usr") String dst_usr, @Field("dst_email") String dst_email, @Field("message") String message, @Field("amount") int amount,
 			Callback<Transaction> callback);
 	
-	@GET("/user")
+	@GET("/api/user")
 	void user(Callback<User> callback);
 }
